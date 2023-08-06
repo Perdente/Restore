@@ -3,6 +3,7 @@ import ProductList from "./ProductList";
 import { useState, useEffect } from "react";
 
 // Checking for Git Commit
+// Fixing bug duhhh....
 export default function Catalog() {
   const [products, setProducts] = useState<Product[]>([]);
 
