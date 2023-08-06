@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 
 // Checking for Git Commit
 // Fixing bug duhhh....
+
+// Anoter
 export default function Catalog() {
   const [products, setProducts] = useState<Product[]>([]);
 
