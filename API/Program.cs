@@ -1,4 +1,5 @@
 using API.Data;
+using API.Middleware;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,29 +12,30 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
 // https://www.youtube.com/watch?v=S7SdtcIr28s&ab_channel=Tech%26CodewithPhi
-builder.Services.AddDbContext<StoreContext>(opt => opt.UseSqlite(
-    builder.Configuration.GetConnectionString("DefaultConnection")
-)); 
+builder.Services.AddDbContext<StoreContext>(
+    opt => opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"))
+);
 
 builder.Services.AddCors();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware<ExceptionMiddleware>(); // custom exception by me
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+app.UseHttpsRedirection();
 app.UseRouting();
 
-app.UseCors(options => options.WithOrigins("http://localhost:3000") .AllowAnyHeader()
-.AllowAnyMethod());
-
-app.UseHttpsRedirection();
+app.UseCors(
+    options => options.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod()
+);
 
 app.UseAuthorization();
 
@@ -43,13 +45,14 @@ using var scope = app.Services.CreateScope();
 var context = scope.ServiceProvider.GetRequiredService<StoreContext>();
 var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
-try {
+try
+{
     context.Database.Migrate();
     DbInitializer.Initilize(context);
 }
-catch (Exception ex) {
+catch (Exception ex)
+{
     logger.LogError(ex, "Problem migrating data");
 }
-
 
 app.Run();
