@@ -24,22 +24,8 @@ import { setBasket } from "../../features/basket/basketSlice";
 function App() {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const buyerId = getCookie("buyerId");
-    if (buyerId) {
-      agent.Basket.get()
-        .then((basket) => dispatch(setBasket(basket)))
-        .catch((error) => console.log(error))
-        .finally(() => setLoading(false));
-    } else {
-      setLoading(false);
-    }
-  }, [dispatch]);
-
   const [darkMode, setDarkMode] = useState(false);
   const paletteType = darkMode ? "dark" : "light";
-
   const theme = createTheme({
     palette: {
       mode: paletteType,
@@ -52,6 +38,18 @@ function App() {
   function handleThemeChange() {
     setDarkMode(!darkMode);
   }
+
+  useEffect(() => {
+    const buyerId = getCookie("buyerId");
+    if (buyerId) {
+      agent.Basket.get()
+        .then((basket) => dispatch(setBasket(basket)))
+        .catch((error) => console.log(error))
+        .finally(() => setLoading(false));
+    } else {
+      setLoading(false);
+    }
+  }, [dispatch]);
 
   if (loading) return <LoadingComponent message="Initialising app... " />;
 
