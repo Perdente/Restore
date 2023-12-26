@@ -156,7 +156,6 @@ export const catalogSlice = createSlice({
     });
     builder.addCase(fetchFilters.rejected, (state, action) => {
       state.status = "fulfilled";
-      console.log(action.payload);
     });
   },
 });

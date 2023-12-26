@@ -12,8 +12,8 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { NavLink } from "react-router-dom";
-import { useStoreContext } from "../context/StoreContext";
 import { useAppSelector } from "../store/configureStore";
+import LoggedInMenu from "./LoggedInMenu";
 
 interface Props {
   darkMode: boolean;
@@ -45,6 +45,7 @@ const rightLinks = [
 
 export default function Header({ darkMode, handleThemeChange }: Props) {
   const { basket } = useAppSelector((state) => state.basket);
+  const { user } = useAppSelector((state) => state.account);
   const itemCount = basket?.items.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
@@ -70,7 +71,6 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
             </ListItem>
           ))}
         </List>
-
         <Box display="flex" alignItems="center">
           <IconButton
             component={Link}
@@ -83,13 +83,22 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
             </Badge>
           </IconButton>
 
-          <List sx={{ display: "flex" }}>
-            {rightLinks.map(({ title, path }) => (
-              <ListItem component={NavLink} to={path} key={path} sx={navStyles}>
-                {title.charAt(0).toUpperCase() + title.slice(1)}
-              </ListItem>
-            ))}
-          </List>
+          {user ? (
+            <LoggedInMenu />
+          ) : (
+            <List sx={{ display: "flex" }}>
+              {rightLinks.map(({ title, path }) => (
+                <ListItem
+                  component={NavLink}
+                  to={path}
+                  key={path}
+                  sx={navStyles}
+                >
+                  {title.charAt(0).toUpperCase() + title.slice(1)}
+                </ListItem>
+              ))}
+            </List>
+          )}
         </Box>
       </Toolbar>
     </AppBar>
