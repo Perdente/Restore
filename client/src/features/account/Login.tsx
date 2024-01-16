@@ -17,6 +17,7 @@ import { LoadingButton } from "@mui/lab";
 import { useDispatch } from "react-redux";
 import { useAppDispatch } from "../../app/store/configureStore";
 import { logInUser } from "./accoutSlice";
+import { toast } from "react-toastify";
 //
 // TODO remove, this demo shouldn't need to reset the theme.
 export default function Login() {
@@ -36,7 +37,12 @@ export default function Login() {
 
   async function submitForm(data: FieldValues) {
     try {
-      await dispatch(logInUser(data));
+      await dispatch(logInUser(data)).then(() => {
+        console.log(data);
+        toast.success(`Welcome, Mr. ${data.username}`, {
+          theme: "colored",
+        });
+      });
       navigate("/catalog");
     } catch (error: any) {
       console.log(error);

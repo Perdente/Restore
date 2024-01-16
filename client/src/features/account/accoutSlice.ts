@@ -68,7 +68,7 @@ export const accountSlice = createSlice({
       state.user = null;
       state.fetchCurrentUserStatus = "rejected";
       localStorage.removeItem("user");
-      toast.error("Session expired - please login again");
+      toast.error("Session expired - please login again", { theme: "colored" });
     });
 
     builder.addMatcher(

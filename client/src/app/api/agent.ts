@@ -42,13 +42,13 @@ axios.interceptors.response.use(
           }
           throw modelStateErrors.flat();
         }
-        toast.error((data as any).title);
+        toast.error((data as any).title, { theme: "colored" });
         break;
       case 401:
-        toast.error((data as any).title);
+        toast.error((data as any).title, { theme: "colored" });
         break;
       case 500:
-        toast.error((data as any).title);
+        toast.error((data as any).title, { theme: "colored" });
         break;
       default:
         break;

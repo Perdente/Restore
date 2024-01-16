@@ -61,7 +61,9 @@ export default function Register() {
           onSubmit={handleSubmit((data) =>
             agent.Account.register(data)
               .then(() => {
-                toast.success("Registration Successful... You can login");
+                toast.success("Registration Successful... You can login", {
+                  theme: "colored",
+                });
                 navigate("/login");
               })
               .catch((error: any) => handleApiErrors(error))

@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../store/configureStore";
 import { logOut } from "../../features/account/accoutSlice";
 import { useNavigate } from "react-router-dom";
 import { clearBasket } from "../../features/basket/basketSlice";
+import { toast } from "react-toastify";
 
 export default function LoggedInMenu() {
   const navigate = useNavigate();
@@ -15,6 +16,9 @@ export default function LoggedInMenu() {
 
   const handleLogOut = () => {
     dispatch(logOut());
+    toast.success(`Goodbye, have a nice day`, {
+      theme: "colored",
+    });
     dispatch(clearBasket());
     navigate("/"); // useNavigate() Hook can't be called within a nested function.
   };
