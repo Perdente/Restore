@@ -56,7 +56,8 @@ export default function ProductCard({ product }: Props) {
       </CardContent>
       <CardActions>
         <LoadingButton
-          loading={status.includes("pendingAddItem" + product.id)}
+          // loading={status.includes("pendingAddItem" + product.id)}
+          loading = {status === "pendingAddItem" + product.id} //Here,'===' is used for exact match so that id=18 and id=1 are dif
           onClick={() =>
             dispatch(addBasketItemAsync({ productId: product.id }))
           }

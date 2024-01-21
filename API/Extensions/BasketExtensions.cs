@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.DTOs;
 using API.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Extensions
 {
@@ -21,7 +22,7 @@ namespace API.Extensions
                             new BasketItemDto
                             {
                                 ProductId = item.ProductId,
-                                Name = item.Product.Name,
+                                Name = item.Product!.Name,
                                 Price = item.Product.Price,
                                 PictureUrl = item.Product.PictureURL,
                                 Type = item.Product.Type,
@@ -31,6 +32,17 @@ namespace API.Extensions
                     )
                     .ToList()
             };
+        }
+
+        public static IQueryable<Basket> RetrieveBasketWithItems(
+            this IQueryable<Basket> query,
+            string buyerId
+        )
+        {
+            return query
+                .Include(i => i.Items)
+                .ThenInclude(p => p.Product)
+                .Where(b => b.BuyerId == buyerId);
         }
     }
 }

@@ -25,6 +25,7 @@ import Register from "../../features/account/Register";
 import { fetchCurrentUser } from "../../features/account/accoutSlice";
 import PrivateRoute from "./PrivateRoute";
 import ForgetPassword from "../../features/account/ForgetPassword";
+import Orders from "../../features/orders/Orders";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -90,6 +91,14 @@ function App() {
             element={
               <PrivateRoute>
                 <CheckoutPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/orders"
+            element={
+              <PrivateRoute>
+                <Orders />
               </PrivateRoute>
             }
           />

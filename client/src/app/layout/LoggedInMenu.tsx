@@ -2,7 +2,7 @@ import { Button, Menu, Fade, MenuItem } from "@mui/material";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../store/configureStore";
 import { logOut } from "../../features/account/accoutSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { clearBasket } from "../../features/basket/basketSlice";
 import { toast } from "react-toastify";
 
@@ -42,7 +42,9 @@ export default function LoggedInMenu() {
         TransitionComponent={Fade}
       >
         <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My Orders</MenuItem>
+        <MenuItem component={Link} to="/orders">
+          My Orders
+        </MenuItem>
         <MenuItem onClick={handleLogOut}>Logout</MenuItem>
       </Menu>
     </>

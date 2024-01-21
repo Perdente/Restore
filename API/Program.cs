@@ -63,7 +63,7 @@ builder.Services
     {
         opt.User.RequireUniqueEmail = true;
     })
-    .AddRoles<IdentityRole>()
+    .AddRoles<Role>()
     .AddEntityFrameworkStores<StoreContext>();
 
 builder.Services
@@ -71,16 +71,27 @@ builder.Services
     .AddJwtBearer(opt =>
     {
         var configuration = builder.Configuration; // Accessing configuration from DependencyContext
-        opt.TokenValidationParameters = new TokenValidationParameters
+
+        // Check if the configuration value is not null
+        var tokenKey = configuration["JWTSettings:TokenKey"];
+        if (tokenKey != null)
         {
-            ValidateIssuer = false,
-            ValidateAudience = false,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(configuration["JWTSettings:TokenKey"])
-            )
-        };
+            opt.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKey))
+            };
+        }
+        else
+        {
+            // Handle the case where the configuration value is null (throw an exception, log a warning, etc.)
+            throw new InvalidOperationException(
+                "JWTSettings:TokenKey configuration value is null."
+            );
+        }
     });
 
 builder.Services.AddAuthorization();

@@ -84,12 +84,31 @@ namespace API.Controllers
 
             return new UserDto
             {
-                Email = user.Email,
+                Email = user!.Email,
                 Token = await _tokenService.GenerateToken(user),
                 Basket = userBasket?.MapBasketToDto()
             };
         }
 
+        [Authorize]
+        [HttpGet("savedAddress")]
+
+        public async Task<ActionResult<UserAddress>> GetSavedAddress() 
+        {
+            var user = await _userManager.Users
+                .Where(x => x.UserName == User.Identity.Name)
+                .Select(user => user.Address)
+                .FirstOrDefaultAsync();
+
+            if (user != null)
+            {
+                return user;
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
         private async Task<Basket?> RetrieveBasket(string buyerId)
         {
             if (string.IsNullOrEmpty(buyerId))
