@@ -8,24 +8,21 @@ import HomePage from "../../features/home/HomePage";
 import ProductDetails from "../../features/catalog/ProductDetails";
 import AboutPage from "../../features/about/AboutPage";
 import ContactPage from "../../features/contact/ContactPage";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import NotFound from "../../errors/NotFound";
 import ServerError from "../../errors/ServerError";
 import BasketPage from "../../features/basket/BasketPage";
-import { useStoreContext } from "../context/StoreContext";
-import { getCookie } from "../util/util";
-import agent from "../api/agent";
 import LoadingComponent from "./LoadingComponent";
-import CheckoutPage from "../../features/checkout/CheckoutPage";
 import { useAppDispatch, useAppSelector } from "../store/configureStore";
-import { fetchBasketAsync, setBasket } from "../../features/basket/basketSlice";
+import { fetchBasketAsync } from "../../features/basket/basketSlice";
 import Login from "../../features/account/Login";
 import Register from "../../features/account/Register";
 import { fetchCurrentUser } from "../../features/account/accoutSlice";
 import PrivateRoute from "./PrivateRoute";
 import ForgetPassword from "../../features/account/ForgetPassword";
 import Orders from "../../features/orders/Orders";
+import CheckoutWrapper from "../../features/checkout/CheckoutWrapper";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -90,7 +87,7 @@ function App() {
             path="/checkout"
             element={
               <PrivateRoute>
-                <CheckoutPage />
+                <CheckoutWrapper />
               </PrivateRoute>
             }
           />
