@@ -5,7 +5,7 @@ import { store } from "../store/configureStore";
 
 const delay = () => new Promise((resolve) => setTimeout(resolve, 500));
 
-axios.defaults.baseURL = "http://localhost:5206/api/";
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 axios.defaults.withCredentials = true;
 
 const responseBody = (response: AxiosResponse) => response.data;
@@ -18,7 +18,7 @@ axios.interceptors.request.use((config) => {
 
 axios.interceptors.response.use(
   async (response) => {
-    await delay();
+    if (process.env.NODE_ENV === "development") await delay();
     const pagination = response.headers["pagination"];
     if (pagination) {
       response.data = new PaginatedResponse(
@@ -45,6 +45,9 @@ axios.interceptors.response.use(
         toast.error((data as any).title, { theme: "colored" });
         break;
       case 401:
+        toast.error((data as any).title, { theme: "colored" });
+        break;
+      case 404:
         toast.error((data as any).title, { theme: "colored" });
         break;
       case 500:

@@ -73,39 +73,46 @@ function App() {
       <ToastContainer position="bottom-right" hideProgressBar />
       <CssBaseline />
       <Header darkMode={darkMode} handleThemeChange={handleThemeChange} />
-      <Container>
-        <Routes>
-          {/* https://stackoverflow.com/a/69849271 */}
-          <Route path="/" element={<HomePage />} />
-          <Route path="/catalog" element={<Catalog />} />
-          <Route path="/catalog/:id" element={<ProductDetails />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/server-error" element={<ServerError />} />
-          <Route path="/basket" element={<BasketPage />} />
-          <Route
-            path="/checkout"
-            element={
-              <PrivateRoute>
-                <CheckoutWrapper />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/orders"
-            element={
-              <PrivateRoute>
-                <Orders />
-              </PrivateRoute>
-            }
-          />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/forgetPassword" element={<ForgetPassword />} />
-          <Route path="*" element={<NotFound />} />
-          {/* https://stackoverflow.com/a/69880162 */}
-        </Routes>
-      </Container>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route
+          path={"/*"}
+          element={
+            <Container sx={{ mt: 4 }}>
+              <Routes>
+                {/* https://stackoverflow.com/a/69849271 */}
+                <Route path="/catalog" element={<Catalog />} />
+                <Route path="/catalog/:id" element={<ProductDetails />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/contact" element={<ContactPage />} />
+                <Route path="/server-error" element={<ServerError />} />
+                <Route path="/basket" element={<BasketPage />} />
+                <Route
+                  path="/checkout"
+                  element={
+                    <PrivateRoute>
+                      <CheckoutWrapper />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/orders"
+                  element={
+                    <PrivateRoute>
+                      <Orders />
+                    </PrivateRoute>
+                  }
+                />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/forgetPassword" element={<ForgetPassword />} />
+                <Route path="*" element={<NotFound />} />
+                {/* https://stackoverflow.com/a/69880162 */}
+              </Routes>
+            </Container>
+          }
+        />
+      </Routes>
     </ThemeProvider>
   );
 }

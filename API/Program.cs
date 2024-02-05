@@ -54,7 +54,7 @@ builder.Services.AddSwaggerGen(c =>
 
 // https://www.youtube.com/watch?v=S7SdtcIr28s&ab_channel=Tech%26CodewithPhi
 builder.Services.AddDbContext<StoreContext>(
-    opt => opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"))
+    opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
 builder.Services.AddCors();
@@ -112,6 +112,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 app.UseCors(
     options =>
         options
@@ -125,6 +128,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapFallbackToController("Index", "Fallback");
 
 using var scope = app.Services.CreateScope();
 
