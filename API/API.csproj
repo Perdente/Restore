@@ -23,8 +23,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
-</Project>
-
-<Content Update="wwwroot\index.html">
+  <Content Update="wwwroot\index.html">
     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
   </Content>
+
+</Project>
+
+
