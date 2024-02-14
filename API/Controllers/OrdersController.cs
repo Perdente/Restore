@@ -28,6 +28,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<OrderDto>>> GetOrders()
         {
+            //
             if (User.Identity != null)
             {
                 return await _context.Orders
