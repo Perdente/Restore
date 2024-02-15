@@ -74,9 +74,7 @@ else
     var UserName = userInfo[0];
     var Password = userInfo[1];
     var Database = databaseUri.LocalPath.TrimStart('/');
-    // var SslMode = SslMode.Require;
-    // var TrustServerCertificate = true;
-
+    
     connString = $"Server={Host};Port={Port};User Id={UserName};Password={Password};Database={Database};";
 
 }
