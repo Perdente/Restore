@@ -10,9 +10,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
-// WebApplicationOptions options = new WebApplicationOptions {
-//     ContentRootPath = "/var/www/yourpath"
-// };
+WebApplicationOptions options = new WebApplicationOptions {
+    ContentRootPath = "/var/www/API"
+};
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
