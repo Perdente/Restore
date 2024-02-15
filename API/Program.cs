@@ -57,14 +57,13 @@ builder.Services.AddSwaggerGen(c =>
 //     opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
 // );
 
-// for deployment on railway.app
 
+// for deployment on railway.app
 string connString;
 if (builder.Environment.IsDevelopment())
     connString = builder.Configuration.GetConnectionString("DefaultConnection");
 else
 {
-    // Use connection string provided at runtime by FlyIO.
     var connUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 
     var databaseUri = new Uri(connUrl!);
@@ -75,7 +74,7 @@ else
     var Password = userInfo[1];
     var Database = databaseUri.LocalPath.TrimStart('/');
     
-    connString = $"Server={Host};Port={Port};User Id={UserName};Password={Password};Database={Database};";
+    connString = $"Server={Host};Port={Port};User Id={UserName};Password={Password};Database={Database};SSL Mode=Require;Trust Server Certificate=true";
 
 }
 builder.Services.AddDbContext<StoreContext>(opt =>
