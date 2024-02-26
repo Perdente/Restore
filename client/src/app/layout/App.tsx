@@ -23,6 +23,7 @@ import PrivateRoute from "./PrivateRoute";
 import ForgetPassword from "../../features/account/ForgetPassword";
 import Orders from "../../features/orders/Orders";
 import CheckoutWrapper from "../../features/checkout/CheckoutWrapper";
+import Inventory from "../../features/admin/Inventory";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -100,6 +101,14 @@ function App() {
                   element={
                     <PrivateRoute>
                       <Orders />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/inventory"
+                  element={
+                    <PrivateRoute roles={["Admin"]}>
+                      <Inventory />
                     </PrivateRoute>
                   }
                 />
