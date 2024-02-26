@@ -70,6 +70,11 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
               {title.charAt(0).toUpperCase() + title.slice(1)}
             </ListItem>
           ))}
+          {user && user.roles?.includes("Admin") && (
+            <ListItem component={NavLink} to={"/inventory"} sx={navStyles}>
+              Inventory
+            </ListItem>
+          )}
         </List>
         <Box display="flex" alignItems="center">
           <IconButton

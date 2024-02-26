@@ -2,6 +2,7 @@ using System.Text;
 using API.Data;
 using API.Entities;
 using API.Middleware;
+using API.RequestHelpers;
 using API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -14,6 +15,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+
+// Adding Automapper -> P13-L04
+builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -73,9 +77,9 @@ else
     var UserName = userInfo[0];
     var Password = userInfo[1];
     var Database = databaseUri.LocalPath.TrimStart('/');
-    
-    connString = $"Server={Host};Port={Port};User Id={UserName};Password={Password};Database={Database};SSL Mode=Require;Trust Server Certificate=true";
 
+    connString =
+        $"Server={Host};Port={Port};User Id={UserName};Password={Password};Database={Database};SSL Mode=Require;Trust Server Certificate=true";
 }
 builder.Services.AddDbContext<StoreContext>(opt =>
 {
@@ -122,6 +126,7 @@ builder.Services
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<PaymentService>();
+builder.Services.AddScoped<ImageService>();
 
 var app = builder.Build();
 
